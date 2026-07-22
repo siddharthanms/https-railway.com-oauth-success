@@ -1,0 +1,32 @@
+{
+  "categories": [
+    {
+      "id": "technical",
+      "label": "Data & Analytics",
+      "skills": [
+        "SQL", "Python (Pandas, NumPy)", "R", "SAS",
+        "Statistical Modelling", "Regression", "Clustering", "Forecasting"
+      ]
+    },
+    {
+      "id": "bi",
+      "label": "Visualisation & BI",
+      "skills": ["Power BI", "Excel (Advanced)", "Tableau", "Google Analytics", "Dashboard Development", "KPI Reporting"]
+    },
+    {
+      "id": "pmo",
+      "label": "Project & PMO Coordination",
+      "skills": ["Governance Frameworks", "Financial Approval Workflows", "SLA Tracking", "Cross-Team Delivery"]
+    },
+    {
+      "id": "business",
+      "label": "Business Analysis",
+      "skills": ["Requirements Gathering", "Stakeholder Communication", "Process Improvement", "Data Quality"]
+    },
+    {
+      "id": "tools",
+      "label": "Tools",
+      "skills": ["Jira", "Adobe Workfront", "Hive", "Microsoft Lists", "Replicon"]
+    }
+  ]
+}

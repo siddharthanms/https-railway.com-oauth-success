@@ -1,0 +1,19 @@
+{
+  "name": "Siddharthan Muthukumaran",
+  "shortName": "Siddharthan Muthukumaran",
+  "headline": "Data & Business Analyst | Turning Complex Data into Actionable Business Strategy",
+  "location": "Auckland, New Zealand",
+  "summary": "Analytics and operations professional with a Master of Analytics (Business) from Massey University and two years' experience building KPI dashboards and reporting automation across a global network of 80+ agencies at Omnicom Global Solutions. Combines SQL, Power BI, and Excel skills with postgraduate training in statistical modelling and data mining to turn raw data into decisions stakeholders can act on.",
+  "avatar": "/avatar-placeholder.svg",
+  "resumeUrl": "/resume.pdf",
+  "email": "siddharthanms0@gmail.com",
+  "phone": "+64 20 436 7400",
+  "socials": [
+    { "label": "Email", "url": "mailto:siddharthanms0@gmail.com", "icon": "mail" },
+    { "label": "Call", "url": "tel:+64204367400", "icon": "phone" }
+  ],
+  "ctas": [
+    { "label": "View Case Studies", "href": "#projects", "style": "primary" },
+    { "label": "Download Resume", "href": "/resume.pdf", "style": "outline" }
+  ]
+}

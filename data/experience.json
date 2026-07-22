@@ -1,0 +1,82 @@
+{
+  "work": [
+    {
+      "id": "omnicom",
+      "org": "Omnicom Global Solutions (Annalect)",
+      "role": "Associate, Governance and Operations",
+      "location": "Chennai, India",
+      "start": "Jul 2023",
+      "end": "Feb 2025",
+      "summary": "Built and maintained KPI, SLA, billing, and utilisation reporting across a global network of 7 Omnicom networks and 80+ agencies.",
+      "highlights": [
+        "Built and maintained 50+ Power BI and Excel dashboards tracking KPIs, SLA adherence, billing, and utilisation metrics across 7 Omnicom networks and 80+ global agencies.",
+        "Reduced manual reporting time by 70% by automating SQL and Excel-based data workflows, freeing team capacity for higher-value analysis.",
+        "Consolidated multi-source data from Replicon, Hive, Jira, and Adobe Workfront into structured reports for senior leadership and client-facing stakeholders.",
+        "Designed and managed financial approval forms and scope trackers used as project contracts, ensuring governance compliance across all new engagements.",
+        "Monitored and resolved quality breaches and delivery delays by coordinating across Resource Management, Project Controllers, and Client Success teams.",
+        "Promoted within the Governance team after one year, taking on Creative Services coordination with additional support to Market Research."
+      ],
+      "tools": ["Power BI", "Excel (Advanced)", "SQL", "Jira", "Adobe Workfront", "Replicon", "Hive"]
+    },
+    {
+      "id": "kulturehire",
+      "org": "KultureHire",
+      "role": "Business Analyst Intern",
+      "location": "Puducherry, India",
+      "start": "Nov 2022",
+      "end": "Apr 2023",
+      "summary": "Analysed recruitment survey data and built dashboards to surface hiring trends for marketing and business development teams.",
+      "highlights": [
+        "Analysed survey datasets from 1,000+ participants using SQL and Excel to uncover hiring trends and candidate engagement patterns.",
+        "Developed interactive dashboards to visualise recruitment metrics, enabling data-driven decisions for marketing and business development teams.",
+        "Presented findings to stakeholders during live LinkedIn virtual sessions, communicating insights clearly to professional audiences in real time."
+      ],
+      "tools": ["SQL", "Excel"]
+    },
+    {
+      "id": "vendra",
+      "org": "Vendra Enterprises",
+      "role": "Business Development Intern",
+      "location": "Chennai, India",
+      "start": "Apr 2022",
+      "end": "Jun 2022",
+      "summary": "Supported strategic sales planning with market research and a pipeline tracking tool.",
+      "highlights": [
+        "Conducted market and competitor research to support strategic sales planning and identify growth opportunities.",
+        "Built an Excel-based pipeline tracker to monitor leads, proposals, and deal status, improving sales team visibility and reporting."
+      ],
+      "tools": ["Excel"]
+    }
+  ],
+  "education": [
+    {
+      "id": "massey",
+      "org": "Massey University",
+      "role": "Master of Analytics (Business)",
+      "location": "Auckland, New Zealand",
+      "start": "2024",
+      "end": "2025",
+      "summary": "Key papers: Data Mastery (Scripting, Databases & Data Privacy), Multivariate Analysis for Big Data, Practical Data Mining, Applied Econometric Methods, Customer Insights, Return on Marketing Investment."
+    },
+    {
+      "id": "anna-university",
+      "org": "Anna University",
+      "role": "Bachelor of Engineering (Mechanical)",
+      "location": "Chennai, India",
+      "start": "2016",
+      "end": "2020",
+      "summary": "Electives: Principles of Management, Statistics & Numerical Methods, Cost Estimation, Process Planning."
+    }
+  ],
+  "certifications": [
+    { "id": "sas-cert", "title": "SAS Academic Specialisation in Business Analytics", "org": "Massey University & SAS", "year": "2026" },
+    { "id": "google-cert", "title": "Google Data Analytics Professional Certificate", "org": "Google", "year": "" },
+    { "id": "ms-pm", "title": "Microsoft Career Essentials in Project Management", "org": "Microsoft", "year": "" },
+    { "id": "ms-ba", "title": "Microsoft Career Essentials in Business Analysis", "org": "Microsoft", "year": "" }
+  ],
+  "awards": [
+    { "id": "rookie", "title": "Rookie of the Year", "org": "Omnicom Global Solutions | Annalect", "year": "2024" },
+    { "id": "on-the-spot", "title": "On-the-Spot Award", "org": "Omnicom Global Solutions | Annalect", "year": "2024" },
+    { "id": "academic-excellence", "title": "Academic Excellence", "org": "Massey University", "year": "2025" }
+  ]
+}

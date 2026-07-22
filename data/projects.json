@@ -1,0 +1,229 @@
+{
+  "projects": [
+    {
+      "slug": "hydro-risk-forecasting",
+      "title": "Hydro-Risk Price Forecasting Model",
+      "tagline": "A regime-sensitive framework modelling NZ wholesale electricity price risk tied to hydro storage.",
+      "org": "Massey University — Capstone (Master's)",
+      "role": "Analyst",
+      "year": "2025",
+      "tags": ["SQL & Python", "Financial Models", "Dashboards"],
+      "featured": true,
+      "thumbnail": "/projects/hydro-risk-thumb.svg",
+      "businessProblem": {
+        "context": "New Zealand's wholesale electricity price is closely tied to hydro storage levels, inflows, HVDC transfer flows, and climate conditions, but price risk under low-storage regimes is hard to see coming from raw storage figures alone.",
+        "goals": [
+          "Build a regime-sensitive framework capturing how hydro storage, inflows, HVDC flows, and climate indicators interact to drive price risk.",
+          "Identify tail-risk amplification under low-storage conditions.",
+          "Generate procurement insights that are usable by a non-technical audience."
+        ],
+        "painPoints": [
+          "Price risk behaves differently depending on the prevailing storage regime, not as a single linear relationship.",
+          "Relevant signals are spread across separate hydro, inflow, HVDC, and climate datasets."
+        ]
+      },
+      "approach": {
+        "methodology": "Built a regime-sensitive framework modelling NZ wholesale electricity price risk using hydro storage, inflows, HVDC flows, and climate indicators, identifying tail-risk amplification under low-storage conditions to generate procurement insights.",
+        "tools": ["Python", "Power BI", "Excel"],
+        "dataSources": ["Hydro storage and inflow data", "HVDC transfer flow data", "Climate indicators"]
+      },
+      "insights": [
+        "Price risk amplifies in the tail under low-storage conditions rather than scaling linearly with storage levels.",
+        "A regime-based view (rather than a single model across all conditions) better captures how price risk actually behaves."
+      ],
+      "visualizations": [],
+      "recommendations": [
+        "Use the regime framework to flag periods where tail-risk conditions are building, ahead of price moves.",
+        "Feed procurement decisions from the regime signal rather than storage percentile alone."
+      ],
+      "roi": "Produced procurement-relevant risk insight grounded in the specific conditions (storage, inflow, HVDC, climate) that drive NZ wholesale price tail risk.",
+      "media": {
+        "dashboardEmbed": null,
+        "documents": [],
+        "codeSnippets": [],
+        "video": null,
+        "downloads": []
+      }
+    },
+    {
+      "slug": "credit-risk-segmentation",
+      "title": "Credit Risk Segmentation & Customer Clustering",
+      "tagline": "Segmenting 30,000+ credit users into behavioural risk groups to enable risk-based pricing.",
+      "org": "Massey University — Multivariate Analysis for Big Data",
+      "role": "Analyst",
+      "year": "2025",
+      "tags": ["SQL & Python", "Financial Models"],
+      "featured": true,
+      "thumbnail": "/projects/credit-risk-thumb.svg",
+      "businessProblem": {
+        "context": "Lenders benefit from grouping customers by behavioural risk rather than relying on a single blended risk score, so pricing can reflect actual risk profile.",
+        "goals": [
+          "Segment a large credit user base into distinct behavioural risk groups.",
+          "Validate the segmentation with a classification approach.",
+          "Enable risk-based pricing from the resulting groups."
+        ],
+        "painPoints": [
+          "High-dimensional customer data is hard to segment meaningfully without dimensionality reduction.",
+          "Segmentation needs to be validated, not just visually plausible."
+        ]
+      },
+      "approach": {
+        "methodology": "Applied PCA and clustering to segment 30,000+ credit users into behavioural risk groups, then validated the segmentation with discriminant analysis.",
+        "tools": ["SAS", "Excel"],
+        "dataSources": ["Credit user behavioural dataset (30,000+ users)"]
+      },
+      "insights": [
+        "Discriminant analysis validated the behavioural clusters with 94% classification accuracy.",
+        "Distinct behavioural risk groups emerged that a single blended score would not surface."
+      ],
+      "visualizations": [],
+      "recommendations": [
+        "Use the validated segments as the basis for risk-based pricing tiers.",
+        "Re-run segmentation periodically as behavioural patterns shift."
+      ],
+      "roi": "94% classification accuracy validating the behavioural segments, enabling risk-based pricing by group.",
+      "media": {
+        "dashboardEmbed": null,
+        "documents": [],
+        "codeSnippets": [],
+        "video": null,
+        "downloads": []
+      }
+    },
+    {
+      "slug": "financial-hardship-modelling",
+      "title": "Financial Hardship Modelling",
+      "tagline": "Quantifying how income, gambling harm, and financial literacy interact to drive financial hardship.",
+      "org": "Massey University — Applied Econometric Methods",
+      "role": "Analyst",
+      "year": "2025",
+      "tags": ["SQL & Python", "Financial Models"],
+      "featured": true,
+      "thumbnail": "/projects/hardship-thumb.svg",
+      "businessProblem": {
+        "context": "Policy decisions around financial hardship support are stronger when they're based on how income, gambling harm, and financial literacy interact, rather than treating each factor in isolation.",
+        "goals": [
+          "Model the interactions between income, gambling harm, and financial literacy.",
+          "Quantify their combined impact on financial hardship.",
+          "Support policy recommendations with statistically robust findings."
+        ],
+        "painPoints": [
+          "These factors are correlated with each other, so isolating their individual contribution requires careful model diagnostics.",
+          "Findings needed to hold up to robustness checks to be usable for policy."
+        ]
+      },
+      "approach": {
+        "methodology": "Modelled interactions between income, gambling harm, and financial literacy using robust OLS regression, applying diagnostics to check the stability of the findings before drawing policy conclusions.",
+        "tools": ["SAS"],
+        "dataSources": ["Survey data on income, gambling harm, and financial literacy"]
+      },
+      "insights": [
+        "Income, gambling harm, and financial literacy interact rather than acting independently on hardship outcomes.",
+        "Robust regression diagnostics confirmed the interaction effects held up beyond a simple linear read of the data."
+      ],
+      "visualizations": [],
+      "recommendations": [
+        "Target policy support at the specific combination of risk factors identified, not each factor independently.",
+        "Use the diagnostic-checked model as a baseline for further hardship research."
+      ],
+      "roi": "Produced statistically robust findings on hardship drivers to support policy recommendations.",
+      "media": {
+        "dashboardEmbed": null,
+        "documents": [],
+        "codeSnippets": [],
+        "video": null,
+        "downloads": []
+      }
+    },
+    {
+      "slug": "omnicom-kpi-governance-dashboards",
+      "title": "KPI & Governance Dashboard Reporting",
+      "tagline": "Consolidating fragmented multi-source data into standardised KPI dashboards across 80+ global agencies.",
+      "org": "Omnicom Global Solutions (Annalect)",
+      "role": "Associate, Governance and Operations",
+      "year": "2023-2025",
+      "tags": ["Dashboards", "Business Requirements / BRDs"],
+      "featured": true,
+      "thumbnail": "/projects/pmo-thumb.svg",
+      "businessProblem": {
+        "context": "KPI, SLA, billing, and utilisation data for 7 Omnicom networks and 80+ global agencies was spread across separate systems (Replicon, Hive, Jira, Adobe Workfront), making reporting to senior leadership and clients a heavily manual process.",
+        "goals": [
+          "Build standardised dashboards covering KPIs, SLA adherence, billing, and utilisation.",
+          "Automate the underlying data workflows to cut manual reporting effort.",
+          "Keep governance compliant through structured financial approval forms and scope trackers."
+        ],
+        "painPoints": [
+          "Source data lived across four separate systems with no unified reporting layer.",
+          "Reporting was manual, which limited time available for actual analysis.",
+          "Quality breaches and delivery delays needed cross-team coordination to resolve."
+        ]
+      },
+      "approach": {
+        "methodology": "Built and maintained 50+ Power BI and Excel dashboards, automated SQL and Excel-based data workflows, and consolidated data from Replicon, Hive, Jira, and Adobe Workfront into structured reports for senior leadership and client-facing stakeholders. Also designed financial approval forms and scope trackers used as project contracts to keep governance compliant.",
+        "tools": ["Power BI", "Excel (Advanced)", "SQL", "Replicon", "Hive", "Jira", "Adobe Workfront"],
+        "dataSources": ["Replicon", "Hive", "Jira", "Adobe Workfront"]
+      },
+      "insights": [
+        "Automating SQL and Excel-based workflows reduced manual reporting time by 70%.",
+        "Coordinating across Resource Management, Project Controllers, and Client Success teams resolved quality breaches and delivery delays more consistently."
+      ],
+      "visualizations": [],
+      "recommendations": [
+        "Keep the automated reporting workflow as the standard rather than reverting to manual consolidation.",
+        "Extend the same financial approval/scope-tracker governance model to new engagements as a default."
+      ],
+      "roi": "70% reduction in manual reporting time, freeing team capacity for higher-value analysis across 7 networks and 80+ agencies.",
+      "media": {
+        "dashboardEmbed": null,
+        "documents": [],
+        "codeSnippets": [],
+        "video": null,
+        "downloads": []
+      }
+    },
+    {
+      "slug": "kulturehire-recruitment-analytics",
+      "title": "Recruitment Analytics Dashboard",
+      "tagline": "Uncovering hiring trends from 1,000+ survey responses to inform marketing and BD strategy.",
+      "org": "KultureHire",
+      "role": "Business Analyst Intern",
+      "year": "2022-2023",
+      "tags": ["SQL & Python", "Dashboards"],
+      "featured": false,
+      "thumbnail": "/projects/kulturehire-thumb.svg",
+      "businessProblem": {
+        "context": "Marketing and business development teams needed a clearer read on hiring trends and candidate engagement patterns than raw survey exports could provide.",
+        "goals": [
+          "Analyse survey data from 1,000+ participants to surface hiring trends.",
+          "Build dashboards that make recruitment metrics usable for non-technical stakeholders.",
+          "Communicate findings clearly to a professional audience in real time."
+        ],
+        "painPoints": [
+          "Survey data on its own didn't reveal actionable patterns without structured analysis.",
+          "Stakeholders needed insights presented live, not just as a static report."
+        ]
+      },
+      "approach": {
+        "methodology": "Analysed survey datasets from 1,000+ participants using SQL and Excel to uncover hiring trends and candidate engagement patterns, then built interactive dashboards to visualise the recruitment metrics.",
+        "tools": ["SQL", "Excel"],
+        "dataSources": ["Recruitment survey data (1,000+ participants)"]
+      },
+      "insights": [
+        "Interactive dashboards surfaced hiring trends and engagement patterns not visible in the raw survey exports.",
+        "Presenting findings live during LinkedIn virtual sessions made the insights more actionable for stakeholders in real time."
+      ],
+      "visualizations": [],
+      "recommendations": [
+        "Use the dashboard as a recurring input to marketing and business development planning, not a one-off analysis."
+      ],
+      "roi": "Enabled data-driven hiring-trend decisions for marketing and business development teams.",
+      "media": {
+        "dashboardEmbed": null,
+        "documents": [],
+        "codeSnippets": [],
+        "video": null,
+        "downloads": []
+      }
+    }
+  ]
+}
