@@ -3,56 +3,112 @@
     {
       "slug": "hydro-risk-forecasting",
       "title": "Hydro-Risk Price Forecasting Model",
-      "tagline": "A regime-sensitive framework modelling NZ wholesale electricity price risk tied to hydro storage.",
-      "org": "Massey University — Capstone (Master's)",
-      "role": "Analyst",
-      "year": "2025",
-      "tags": ["SQL & Python", "Financial Models", "Dashboards"],
+      "tagline": "Regime-sensitive modelling of NZ wholesale electricity price risk, showing tail risk roughly doubles once hydro storage drops into the bottom decile.",
+      "org": "Massey University \u2014 Master of Analytics Capstone (Paper 115.801)",
+      "role": "Analyst (Supervisor: Dr. Shafiq Alam)",
+      "year": "2026",
+      "tags": [
+        "SQL & Python",
+        "Financial Models",
+        "Dashboards"
+      ],
       "featured": true,
       "thumbnail": "/projects/hydro-risk-thumb.svg",
       "businessProblem": {
-        "context": "New Zealand's wholesale electricity price is closely tied to hydro storage levels, inflows, HVDC transfer flows, and climate conditions, but price risk under low-storage regimes is hard to see coming from raw storage figures alone.",
+        "context": "New Zealand's wholesale electricity price is heavily exposed to hydro storage conditions, but that exposure isn't linear \u2014 a small change in storage can mean a very different price-risk environment depending on where storage sits relative to historical norms. Wellington Electricity needed a way to see that regime shift coming rather than reacting to it after prices had already spiked.",
         "goals": [
-          "Build a regime-sensitive framework capturing how hydro storage, inflows, HVDC flows, and climate indicators interact to drive price risk.",
-          "Identify tail-risk amplification under low-storage conditions.",
-          "Generate procurement insights that are usable by a non-technical audience."
+          "Build a regime-sensitive model linking hydro storage, tributary inflows, HVDC transfer flows, spill volumes, and climate indicators to wholesale price risk.",
+          "Quantify how tail risk (VaR/CVaR) changes specifically once storage falls into a low-storage regime, rather than assuming a constant relationship.",
+          "Turn the regime signal into an early-warning indicator that procurement and risk teams can act on ahead of price moves."
         ],
         "painPoints": [
-          "Price risk behaves differently depending on the prevailing storage regime, not as a single linear relationship.",
-          "Relevant signals are spread across separate hydro, inflow, HVDC, and climate datasets."
+          "Monthly storage, inflow, spill, HVDC and climate data lived across nine separate source folders with inconsistent formats, requiring a full standardisation and validation pass before any modelling could start.",
+          "A single linear regression across all storage levels masked what was actually happening \u2014 the real risk was concentrated in a specific low-storage regime, not spread evenly across the range.",
+          "HVDC transfer data limited the reliable estimation window to 1996-2019 (241 months), which had to be handled carefully rather than just running the model on all 279 available months of price data."
         ]
       },
       "approach": {
-        "methodology": "Built a regime-sensitive framework modelling NZ wholesale electricity price risk using hydro storage, inflows, HVDC flows, and climate indicators, identifying tail-risk amplification under low-storage conditions to generate procurement insights.",
-        "tools": ["Python", "Power BI", "Excel"],
-        "dataSources": ["Hydro storage and inflow data", "HVDC transfer flow data", "Climate indicators"]
+        "methodology": "Standardised and merged nine separate data sources into a single monthly panel (1996-2024, 279 observations), then classified each month into a storage regime using percentile thresholds \u2014 with the low-storage regime defined as national active storage at or below the 10th percentile (~34% of active capacity). Estimated OLS regression models with HC3 robust standard errors, moving from a simple storage-only model (R\u00b2 = 0.167) to a multi-driver model adding HVDC flow, spill, lagged inflow anomaly and lagged price (R\u00b2 = 0.704), then validated the storage threshold non-parametrically with a spline basis. Computed Value-at-Risk and Conditional VaR at the 95th and 99th percentiles separately for the normal and low-storage regimes to quantify tail-risk amplification, and tested a short-horizon early-warning specification to flag regime entry ahead of time.",
+        "tools": [
+          "Python",
+          "Power BI",
+          "Excel"
+        ],
+        "dataSources": [
+          "National hydro storage levels (active storage, % of capacity)",
+          "Tributary and river inflow data",
+          "HVDC inter-island transfer flows",
+          "Spill volumes",
+          "NIWA monthly climate indicators",
+          "Wholesale electricity price data (monthly mean)"
+        ]
       },
       "insights": [
-        "Price risk amplifies in the tail under low-storage conditions rather than scaling linearly with storage levels.",
-        "A regime-based view (rather than a single model across all conditions) better captures how price risk actually behaves."
+        "Mean wholesale price under low-storage conditions was $300.96/MWh, versus $173.58/MWh in normal conditions and $140.97/MWh in high-storage conditions \u2014 the low-storage regime alone explains most of the price variation the model captures.",
+        "In dry-year proxy months, mean price was $438.16/MWh versus $165.21/MWh in normal months \u2014 more than double, and a materially bigger gap than the broader low-storage regime shows on its own.",
+        "Tail risk moves more than the mean does: 95th-percentile VaR jumps from $717.97/MWh (normal) to $2,026.16/MWh (low storage), and CVaR95 rises from $1,511.22 to $2,118.51 \u2014 roughly a 40% increase in expected loss beyond the 95th percentile once storage crosses the low-storage threshold.",
+        "The storage effect is non-linear: a simple storage-only regression explains little (R\u00b2 = 0.167), but adding an explicit low-storage interaction term (coefficient -20.656, p < 0.001) and lagged drivers (HVDC flow, spill, inflow anomaly, lagged price) lifts explanatory power to R\u00b2 = 0.704, with lagged price the strongest single driver \u2014 evidence that price shocks persist rather than resetting each month."
       ],
       "visualizations": [],
       "recommendations": [
-        "Use the regime framework to flag periods where tail-risk conditions are building, ahead of price moves.",
-        "Feed procurement decisions from the regime signal rather than storage percentile alone."
+        "Use the ~34%-of-capacity storage threshold as a hedge-escalation trigger \u2014 a concrete, monitorable line rather than a qualitative 'storage is getting low' judgement call.",
+        "Size hedging and procurement buffers off CVaR95 by regime, not off the unconditional average price \u2014 the ~40% jump in expected tail loss under low storage is the number that actually matters for exposure planning.",
+        "Because lagged price is the strongest driver in the multi-driver model, treat a live price spike as informative about near-term persistence, not just a one-off data point, when deciding whether to escalate hedging.",
+        "Extend the early-warning specification (built on a 3-month-ahead dry-regime flag) into a monitoring routine that flags regime entry before storage fully crosses the threshold, giving procurement a lead-time advantage rather than a reactive one."
       ],
-      "roi": "Produced procurement-relevant risk insight grounded in the specific conditions (storage, inflow, HVDC, climate) that drive NZ wholesale price tail risk.",
+      "roi": "Quantified that expected tail-loss exposure (CVaR95) rises roughly 40% once hydro storage falls into the bottom decile, and identified a concrete, monitorable storage threshold (~34% of active capacity) that can anchor a hedge-escalation trigger rather than relying on qualitative judgement.",
       "media": {
         "dashboardEmbed": null,
-        "documents": [],
-        "codeSnippets": [],
+        "documents": [
+          {
+            "title": "Full Capstone Report (PDF)",
+            "type": "pdf",
+            "url": "/case-studies/hydro-risk/Hydro-Risk-Capstone-Report.pdf"
+          }
+        ],
+        "codeSnippets": [
+          {
+            "language": "python",
+            "title": "Storage Regime Classification",
+            "code": "STORAGE_COL = \"Storage_active_mm\"\nPRICE_COL = \"Price_mean\"\n\n# Create storage regimes using quantiles\nq_low = df[STORAGE_COL].quantile(0.20)\nq_high = df[STORAGE_COL].quantile(0.80)\n\ndef storage_regime(x):\n    if x <= q_low:\n        return \"Low storage\"\n    elif x >= q_high:\n        return \"High storage\"\n    else:\n        return \"Normal storage\"\n\ndf[\"Storage_Regime\"] = df[STORAGE_COL].apply(storage_regime)\n\n# Tighter low-storage flag used for the headline regime (bottom decile)\nq10 = reg_df[\"Storage_pct\"].quantile(0.10)\nreg_df[\"LowStorage_10\"] = (reg_df[\"Storage_pct\"] <= q10).astype(int)"
+          },
+          {
+            "language": "python",
+            "title": "Tail-Risk: VaR & CVaR by Regime",
+            "code": "def var_cvar(x, q=0.95):\n    x = pd.Series(x).dropna().values\n    v = np.percentile(x, 100*q)\n    c = x[x >= v].mean() if (x >= v).any() else np.nan\n    return v, c\n\nrows = []\nfor label, subset in [(\"Normal\", tail_df[tail_df[\"LowStorage_10\"]==0]),\n                      (\"LowStorage_10\", tail_df[tail_df[\"LowStorage_10\"]==1])]:\n    v95, c95 = var_cvar(subset[\"Price_mean\"], 0.95)\n    v99, c99 = var_cvar(subset[\"Price_mean\"], 0.99)\n    rows.append({\n        \"Regime\": label,\n        \"n\": len(subset),\n        \"VaR95\": v95,\n        \"CVaR95\": c95,\n        \"VaR99\": v99,\n        \"CVaR99\": c99\n    })\n\ntail_risk_by_regime = pd.DataFrame(rows)"
+          }
+        ],
         "video": null,
-        "downloads": []
+        "downloads": [
+          {
+            "label": "Presentation Deck (PPTX)",
+            "fileUrl": "/case-studies/hydro-risk/Hydro-Risk-Presentation.pptx",
+            "fileType": "pptx"
+          },
+          {
+            "label": "Jupyter Notebook",
+            "fileUrl": "/case-studies/hydro-risk/Hydro-Risk-Notebook.ipynb",
+            "fileType": "notebook"
+          },
+          {
+            "label": "Power BI File",
+            "fileUrl": "/case-studies/hydro-risk/Hydro-Risk-PowerBI.pbix",
+            "fileType": "pbix"
+          }
+        ]
       }
     },
     {
       "slug": "credit-risk-segmentation",
       "title": "Credit Risk Segmentation & Customer Clustering",
       "tagline": "Segmenting 30,000+ credit users into behavioural risk groups to enable risk-based pricing.",
-      "org": "Massey University — Multivariate Analysis for Big Data",
+      "org": "Massey University \u2014 Multivariate Analysis for Big Data",
       "role": "Analyst",
       "year": "2025",
-      "tags": ["SQL & Python", "Financial Models"],
+      "tags": [
+        "SQL & Python",
+        "Financial Models"
+      ],
       "featured": true,
       "thumbnail": "/projects/credit-risk-thumb.svg",
       "businessProblem": {
@@ -69,8 +125,13 @@
       },
       "approach": {
         "methodology": "Applied PCA and clustering to segment 30,000+ credit users into behavioural risk groups, then validated the segmentation with discriminant analysis.",
-        "tools": ["SAS", "Excel"],
-        "dataSources": ["Credit user behavioural dataset (30,000+ users)"]
+        "tools": [
+          "SAS",
+          "Excel"
+        ],
+        "dataSources": [
+          "Credit user behavioural dataset (30,000+ users)"
+        ]
       },
       "insights": [
         "Discriminant analysis validated the behavioural clusters with 94% classification accuracy.",
@@ -94,10 +155,13 @@
       "slug": "financial-hardship-modelling",
       "title": "Financial Hardship Modelling",
       "tagline": "Quantifying how income, gambling harm, and financial literacy interact to drive financial hardship.",
-      "org": "Massey University — Applied Econometric Methods",
+      "org": "Massey University \u2014 Applied Econometric Methods",
       "role": "Analyst",
       "year": "2025",
-      "tags": ["SQL & Python", "Financial Models"],
+      "tags": [
+        "SQL & Python",
+        "Financial Models"
+      ],
       "featured": true,
       "thumbnail": "/projects/hardship-thumb.svg",
       "businessProblem": {
@@ -114,8 +178,12 @@
       },
       "approach": {
         "methodology": "Modelled interactions between income, gambling harm, and financial literacy using robust OLS regression, applying diagnostics to check the stability of the findings before drawing policy conclusions.",
-        "tools": ["SAS"],
-        "dataSources": ["Survey data on income, gambling harm, and financial literacy"]
+        "tools": [
+          "SAS"
+        ],
+        "dataSources": [
+          "Survey data on income, gambling harm, and financial literacy"
+        ]
       },
       "insights": [
         "Income, gambling harm, and financial literacy interact rather than acting independently on hardship outcomes.",
@@ -142,7 +210,10 @@
       "org": "Omnicom Global Solutions (Annalect)",
       "role": "Associate, Governance and Operations",
       "year": "2023-2025",
-      "tags": ["Dashboards", "Business Requirements / BRDs"],
+      "tags": [
+        "Dashboards",
+        "Business Requirements / BRDs"
+      ],
       "featured": true,
       "thumbnail": "/projects/pmo-thumb.svg",
       "businessProblem": {
@@ -160,8 +231,21 @@
       },
       "approach": {
         "methodology": "Built and maintained 50+ Power BI and Excel dashboards, automated SQL and Excel-based data workflows, and consolidated data from Replicon, Hive, Jira, and Adobe Workfront into structured reports for senior leadership and client-facing stakeholders. Also designed financial approval forms and scope trackers used as project contracts to keep governance compliant.",
-        "tools": ["Power BI", "Excel (Advanced)", "SQL", "Replicon", "Hive", "Jira", "Adobe Workfront"],
-        "dataSources": ["Replicon", "Hive", "Jira", "Adobe Workfront"]
+        "tools": [
+          "Power BI",
+          "Excel (Advanced)",
+          "SQL",
+          "Replicon",
+          "Hive",
+          "Jira",
+          "Adobe Workfront"
+        ],
+        "dataSources": [
+          "Replicon",
+          "Hive",
+          "Jira",
+          "Adobe Workfront"
+        ]
       },
       "insights": [
         "Automating SQL and Excel-based workflows reduced manual reporting time by 70%.",
@@ -188,7 +272,10 @@
       "org": "KultureHire",
       "role": "Business Analyst Intern",
       "year": "2022-2023",
-      "tags": ["SQL & Python", "Dashboards"],
+      "tags": [
+        "SQL & Python",
+        "Dashboards"
+      ],
       "featured": false,
       "thumbnail": "/projects/kulturehire-thumb.svg",
       "businessProblem": {
@@ -205,8 +292,13 @@
       },
       "approach": {
         "methodology": "Analysed survey datasets from 1,000+ participants using SQL and Excel to uncover hiring trends and candidate engagement patterns, then built interactive dashboards to visualise the recruitment metrics.",
-        "tools": ["SQL", "Excel"],
-        "dataSources": ["Recruitment survey data (1,000+ participants)"]
+        "tools": [
+          "SQL",
+          "Excel"
+        ],
+        "dataSources": [
+          "Recruitment survey data (1,000+ participants)"
+        ]
       },
       "insights": [
         "Interactive dashboards surfaced hiring trends and engagement patterns not visible in the raw survey exports.",
