@@ -13,7 +13,7 @@
         "Dashboards"
       ],
       "featured": true,
-      "thumbnail": "/projects/hydro-risk-thumb.svg",
+      "thumbnail": "/case-studies/hydro-risk/charts/price-vs-storage-scatter.png",
       "businessProblem": {
         "context": "New Zealand's wholesale electricity price is heavily exposed to hydro storage conditions, but that exposure isn't linear \u2014 a small change in storage can mean a very different price-risk environment depending on where storage sits relative to historical norms. Wellington Electricity needed a way to see that regime shift coming rather than reacting to it after prices had already spiked.",
         "goals": [
@@ -49,7 +49,32 @@
         "Tail risk moves more than the mean does: 95th-percentile VaR jumps from $717.97/MWh (normal) to $2,026.16/MWh (low storage), and CVaR95 rises from $1,511.22 to $2,118.51 \u2014 roughly a 40% increase in expected loss beyond the 95th percentile once storage crosses the low-storage threshold.",
         "The storage effect is non-linear: a simple storage-only regression explains little (R\u00b2 = 0.167), but adding an explicit low-storage interaction term (coefficient -20.656, p < 0.001) and lagged drivers (HVDC flow, spill, inflow anomaly, lagged price) lifts explanatory power to R\u00b2 = 0.704, with lagged price the strongest single driver \u2014 evidence that price shocks persist rather than resetting each month."
       ],
-      "visualizations": [],
+      "visualizations": [
+        {
+          "type": "image",
+          "title": "National Hydro Storage, 1996-2024",
+          "description": "Monthly active hydro storage over the full sample period, showing the recurring dry-year troughs that drive the low-storage regime.",
+          "image": "/case-studies/hydro-risk/charts/storage-timeseries.png"
+        },
+        {
+          "type": "image",
+          "title": "Price Distribution by Storage Regime",
+          "description": "Wholesale price spread is both higher and far more volatile once storage drops into the bottom decile (LowStorage_10 = 1), 1996-2019.",
+          "image": "/case-studies/hydro-risk/charts/price-by-regime-boxplot.png"
+        },
+        {
+          "type": "image",
+          "title": "Price Distribution: Normal vs Low Storage (Tail Focus)",
+          "description": "Overlaying the two regimes' price histograms shows the low-storage distribution carries materially more mass in the extreme tail.",
+          "image": "/case-studies/hydro-risk/charts/price-tail-histogram.png"
+        },
+        {
+          "type": "image",
+          "title": "Price Under Hydro Stress Scenarios",
+          "description": "Normal, dry (P10) and severe-dry (P05) storage scenarios compared \u2014 the severe-dry case shows a dramatically wider price range.",
+          "image": "/case-studies/hydro-risk/charts/price-stress-scenarios.png"
+        }
+      ],
       "recommendations": [
         "Use the ~34%-of-capacity storage threshold as a hedge-escalation trigger \u2014 a concrete, monitorable line rather than a qualitative 'storage is getting low' judgement call.",
         "Size hedging and procurement buffers off CVaR95 by regime, not off the unconditional average price \u2014 the ~40% jump in expected tail loss under low storage is the number that actually matters for exposure planning.",
