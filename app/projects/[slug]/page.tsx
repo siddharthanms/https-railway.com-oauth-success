@@ -110,10 +110,18 @@ export default function ProjectPage({ params }: Props) {
                 <li key={insight}>{insight}</li>
               ))}
             </ul>
-            {(project.visualizations as { type: string; title: string; description: string }[]).length > 0 && (
+            {(project.visualizations as { type: string; title: string; description: string; image?: string }[]).length > 0 && (
               <div className="mt-6 grid gap-4 sm:grid-cols-2">
-                {(project.visualizations as { type: string; title: string; description: string }[]).map((viz) => (
-                  <Card key={viz.title}>
+                {(project.visualizations as { type: string; title: string; description: string; image?: string }[]).map((viz) => (
+                  <Card key={viz.title} className="overflow-hidden">
+                    {viz.image && (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={viz.image}
+                        alt={viz.title}
+                        className="w-full border-b border-border bg-white object-contain"
+                      />
+                    )}
                     <CardHeader>
                       <CardTitle className="text-sm">{viz.title}</CardTitle>
                     </CardHeader>
