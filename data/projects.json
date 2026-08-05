@@ -126,7 +126,7 @@
     {
       "slug": "credit-risk-segmentation",
       "title": "Credit Risk Segmentation & Customer Clustering",
-      "tagline": "Segmenting 30,000+ credit users into behavioural risk groups to enable risk-based pricing.",
+      "tagline": "Reducing 18 behavioural credit variables to 3 components, then segmenting 30,000 clients into risk archetypes validated at 94.5% accuracy.",
       "org": "Massey University \u2014 Multivariate Analysis for Big Data",
       "role": "Analyst",
       "year": "2025",
@@ -135,51 +135,99 @@
         "Financial Models"
       ],
       "featured": true,
-      "thumbnail": "/projects/credit-risk-thumb.svg",
+      "thumbnail": "/case-studies/credit-risk/charts/scree-plot.png",
       "businessProblem": {
-        "context": "Lenders benefit from grouping customers by behavioural risk rather than relying on a single blended risk score, so pricing can reflect actual risk profile.",
+        "context": "Lenders typically score credit risk with a single blended number, which hides the fact that two clients with the same score can be risky for completely different reasons \u2014 one is over-extended but pays on time, another has modest balances but keeps missing payments. This project used the UCI 'Default of Credit Card Clients' dataset (30,000 Taiwanese credit card accounts, April\u2013September 2005) to test whether behavioural segmentation could surface those distinctions.",
         "goals": [
-          "Segment a large credit user base into distinct behavioural risk groups.",
-          "Validate the segmentation with a classification approach.",
-          "Enable risk-based pricing from the resulting groups."
+          "Identify the underlying behavioural factors that actually drive default, rather than treating 18 monthly variables as independent inputs.",
+          "Determine whether distinct client archetypes exist based on financial behaviour.",
+          "Test how reliably those archetypes can be classified \u2014 i.e. whether the segmentation is statistically real or just visually plausible."
         ],
         "painPoints": [
-          "High-dimensional customer data is hard to segment meaningfully without dimensionality reduction.",
-          "Segmentation needs to be validated, not just visually plausible."
+          "The 18 repayment-status, bill-amount and payment-amount variables across six months are heavily correlated with each other, so feeding them into a model directly creates redundancy and multicollinearity.",
+          "Running hierarchical clustering on all 30,000 observations was computationally impractical in SAS and produced a dendrogram with completely unreadable axis labels.",
+          "A clustering result on its own proves nothing \u2014 it needed independent validation to show the groups were genuinely separable."
         ]
       },
       "approach": {
-        "methodology": "Applied PCA and clustering to segment 30,000+ credit users into behavioural risk groups, then validated the segmentation with discriminant analysis.",
+        "methodology": "Cleaned and standardised the dataset (z-score transformation across all 18 continuous variables; unknown education codes retained as an explicit 'Unknown' category rather than dropped, to preserve completeness). Ran Principal Component Analysis to reduce the 18 correlated variables to three interpretable components. Used those components as inputs to hierarchical clustering via Ward's minimum variance method, on a stratified sample of 1,000 clients (500 defaulters, 500 non-defaulters) \u2014 a deliberate trade-off after the full 30,000-observation run proved unreadable and computationally slow. Finally validated the resulting clusters with Linear Discriminant Analysis using PROC DISCRIM with cross-validation enabled, testing whether clients could be correctly re-classified into their assigned cluster.",
         "tools": [
           "SAS",
           "Excel"
         ],
         "dataSources": [
-          "Credit user behavioural dataset (30,000+ users)"
+          "UCI 'Default of Credit Card Clients' dataset \u2014 30,000 accounts, 6 months of demographic, billing, repayment and default data"
         ]
       },
       "insights": [
-        "Discriminant analysis validated the behavioural clusters with 94% classification accuracy.",
-        "Distinct behavioural risk groups emerged that a single blended score would not surface."
+        "Three principal components captured ~79% of total variance (PC1 41.13%, PC2 23.21%, PC3 14.48%), and each had a clear behavioural meaning: PC1 = overall credit usage volume, PC2 = delinquency/payment delay, PC3 = repayment consistency.",
+        "Clustering on those components produced three distinct client archetypes: high financial activity with timely payments (low-risk), delayed payments with low repayment amounts (high-risk), and moderate activity with inconsistent payment behaviour (middle tier).",
+        "Discriminant analysis confirmed the segmentation held up: 94.6% resubstitution accuracy and 94.5% cross-validated accuracy, with a cross-validated error rate of roughly 5.5% \u2014 the clusters are statistically separable, not an artefact of the clustering method.",
+        "Clients who defaulted tended to have lower credit limits, and clients with lower or unknown education levels showed the highest default rates \u2014 suggesting a link between financial literacy and credit behaviour worth exploring further."
       ],
-      "visualizations": [],
+      "visualizations": [
+        {
+          "type": "image",
+          "title": "Credit Limit by Default Status",
+          "description": "Clients who defaulted show a visibly lower credit limit distribution than those who did not.",
+          "image": "/case-studies/credit-risk/charts/credit-limit-by-default.png"
+        },
+        {
+          "type": "image",
+          "title": "Scree Plot of Principal Components",
+          "description": "A clear elbow at the third component \u2014 after PC3 each additional component contributes very little, supporting a three-component solution.",
+          "image": "/case-studies/credit-risk/charts/scree-plot.png"
+        },
+        {
+          "type": "image",
+          "title": "Cumulative Variance Explained",
+          "description": "The first three components together account for roughly 79% of total variance in client behaviour.",
+          "image": "/case-studies/credit-risk/charts/variance-explained.png"
+        },
+        {
+          "type": "image",
+          "title": "Hierarchical Clustering Dendrogram (Ward's Method)",
+          "description": "Built from the stratified 1,000-client sample. Vertical linkage heights show clear separation into three clusters, though x-axis labels remain compressed \u2014 a documented limitation of dendrograms at this scale.",
+          "image": "/case-studies/credit-risk/charts/dendrogram.png"
+        }
+      ],
       "recommendations": [
-        "Use the validated segments as the basis for risk-based pricing tiers.",
-        "Re-run segmentation periodically as behavioural patterns shift."
+        "Use the three validated archetypes as the basis for risk-based pricing tiers rather than a single blended score \u2014 the drivers of risk differ meaningfully between groups.",
+        "Prioritise the delinquency component (PC2) as an early-warning signal, since it isolates payment-delay behaviour from sheer credit usage volume.",
+        "For datasets of this size, prefer PCA scatterplots over dendrograms for communicating cluster structure \u2014 the dendrogram becomes visually unusable well before it becomes analytically useless.",
+        "Re-run the segmentation periodically, as behavioural patterns shift with economic conditions."
       ],
-      "roi": "94% classification accuracy validating the behavioural segments, enabling risk-based pricing by group.",
+      "roi": "Reduced 18 correlated credit variables to 3 interpretable behavioural dimensions and produced a three-segment client model validated at 94.5% cross-validated classification accuracy \u2014 a defensible basis for risk-based pricing and targeted credit policy.",
       "media": {
         "dashboardEmbed": null,
-        "documents": [],
-        "codeSnippets": [],
+        "documents": [
+          {
+            "title": "Full Project Report (PDF)",
+            "type": "pdf",
+            "url": "/case-studies/credit-risk/Credit-Risk-Report.pdf"
+          }
+        ],
+        "codeSnippets": [
+          {
+            "language": "sas",
+            "title": "Discriminant Analysis with Cross-Validation",
+            "code": "/* Validate the three-cluster solution using PROC DISCRIM */\nproc discrim data=cluster_out\n             crossvalidate\n             pool=yes;\n  class cluster;\n  var Prin1 Prin2 Prin3;\n  title \"Discriminant Analysis - Validating Cluster Solution\";\nrun;"
+          }
+        ],
         "video": null,
-        "downloads": []
+        "downloads": [
+          {
+            "label": "SAS Code",
+            "fileUrl": "/case-studies/credit-risk/Credit-Risk-SAS-Code.sas",
+            "fileType": "sas"
+          }
+        ]
       }
     },
     {
       "slug": "financial-hardship-modelling",
       "title": "Financial Hardship Modelling",
-      "tagline": "Quantifying how income, gambling harm, and financial literacy interact to drive financial hardship.",
+      "tagline": "Two-stage econometric study of 14,669 survey respondents testing whether everyday financial habits actually protect against hardship \u2014 and for whom.",
       "org": "Massey University \u2014 Applied Econometric Methods",
       "role": "Analyst",
       "year": "2025",
@@ -188,42 +236,505 @@
         "Financial Models"
       ],
       "featured": true,
-      "thumbnail": "/projects/hardship-thumb.svg",
+      "thumbnail": "/case-studies/financial-hardship/charts/interaction-plot.png",
       "businessProblem": {
-        "context": "Policy decisions around financial hardship support are stronger when they're based on how income, gambling harm, and financial literacy interact, rather than treating each factor in isolation.",
+        "context": "Financial hardship policy tends to treat behaviours like budgeting and goal-setting as universally protective. But whether those habits actually help \u2014 and how much \u2014 plausibly depends on who you are: your income, marital status, employment, and education. This two-part study tested that directly, first modelling hardship as a continuous score, then as a set of concrete hardship events (selling possessions, missing rent, needing welfare).",
         "goals": [
-          "Model the interactions between income, gambling harm, and financial literacy.",
-          "Quantify their combined impact on financial hardship.",
-          "Support policy recommendations with statistically robust findings."
+          "Quantify how financial capability, gambling harm, income and demographics jointly drive financial hardship.",
+          "Test whether the protective effect of financial habits varies across subgroups, using interaction terms rather than assuming a uniform effect.",
+          "Establish that findings survive diagnostic checks \u2014 heteroscedasticity, multicollinearity, and goodness-of-fit \u2014 before drawing any policy conclusion."
         ],
         "painPoints": [
-          "These factors are correlated with each other, so isolating their individual contribution requires careful model diagnostics.",
-          "Findings needed to hold up to robustness checks to be usable for policy."
+          "Hardship scores are heavily right-skewed: most respondents report little to no hardship, with a long tail of severe distress \u2014 so the average tells you very little about the people who actually need help.",
+          "The behavioural, demographic and income predictors are correlated with each other, making it hard to isolate any single factor's contribution.",
+          "Interaction effects are easy to over-interpret; several plausible-sounding hypotheses needed to be tested and honestly reported as unsupported."
         ]
       },
       "approach": {
-        "methodology": "Modelled interactions between income, gambling harm, and financial literacy using robust OLS regression, applying diagnostics to check the stability of the findings before drawing policy conclusions.",
+        "methodology": "Stage 1 (Assessment 1): estimated an Ordinary Least Squares regression of a continuous financial hardship score on financial capability, gambling harm, their interaction, income (including a squared term to capture non-linearity), and demographic controls. Tested the full set of Classical Linear Regression Model assumptions \u2014 linearity, normality of residuals, homoscedasticity and multicollinearity \u2014 then re-estimated with Huber-White robust standard errors to confirm coefficients held. Stage 2 (Assessment 2): reframed hardship as three binary outcomes \u2014 selling or pawning possessions, missing rent or mortgage, and relying on welfare \u2014 and estimated four logistic regression models, each pairing a financial behaviour with a demographic moderator via an interaction term. Assessed each model on AIC, concordance (c-statistic) and the Hosmer\u2013Lemeshow goodness-of-fit test.",
         "tools": [
           "SAS"
         ],
         "dataSources": [
-          "Survey data on income, gambling harm, and financial literacy"
+          "Survey of 14,669 respondents across 31 variables covering financial behaviours, socio-demographics and hardship experiences"
         ]
       },
       "insights": [
-        "Income, gambling harm, and financial literacy interact rather than acting independently on hardship outcomes.",
-        "Robust regression diagnostics confirmed the interaction effects held up beyond a simple linear read of the data."
+        "Financial capability significantly reduced hardship, but gambling harm significantly increased it \u2014 and the interaction was significant, meaning gambling erodes the protective benefit of financial literacy rather than acting independently of it.",
+        "Financial monitoring significantly reduced the odds of selling or pawning possessions (p = 0.0003), and the interaction with marital status was significant (p = 0.0326) \u2014 the protective effect was stronger for married respondents, pointing to shared household financial decision-making.",
+        "Not every plausible interaction held. Goal-setting \u00d7 education (p = 0.2152), monitoring \u00d7 employment (p = 0.5248), and goal-setting \u00d7 income (p = 0.1614) were all non-significant \u2014 the behaviours help broadly, but not measurably more for those specific subgroups.",
+        "The OLS model explained ~16% of hardship variance (R\u00b2 = 0.1619, F(12, 14227) = 228.96, p < 0.0001) \u2014 modest in absolute terms but typical for behavioural models where individual circumstance dominates.",
+        "All four logistic models exceeded a c-statistic of 0.72, with the welfare-reliance model performing best at 0.829, and all passed the Hosmer\u2013Lemeshow test \u2014 indicating well-calibrated, reliable classification."
       ],
-      "visualizations": [],
+      "visualizations": [
+        {
+          "type": "image",
+          "title": "Distribution of Financial Hardship Scores",
+          "description": "Heavily right-skewed: most respondents report zero or minimal hardship, with a long tail of severe distress that the mean alone would obscure.",
+          "image": "/case-studies/financial-hardship/charts/hardship-distribution.png"
+        },
+        {
+          "type": "image",
+          "title": "Gambling Harm by Respondent Group",
+          "description": "Most respondents report little to no gambling harm, with a small number of significant outliers.",
+          "image": "/case-studies/financial-hardship/charts/gambling-harm-by-group.png"
+        },
+        {
+          "type": "image",
+          "title": "Predicted Probability of Asset Liquidation by Marital Status",
+          "description": "As financial monitoring increases, the predicted probability of selling or pawning possessions falls \u2014 and the decline differs by marital status, which is the significant interaction the model identified.",
+          "image": "/case-studies/financial-hardship/charts/interaction-plot.png"
+        }
+      ],
       "recommendations": [
-        "Target policy support at the specific combination of risk factors identified, not each factor independently.",
-        "Use the diagnostic-checked model as a baseline for further hardship research."
+        "Pair financial monitoring programmes with joint household planning tools for couples \u2014 that's where the interaction shows the effect is strongest.",
+        "Treat gambling harm as a direct threat to financial capability programmes, not a separate issue: it measurably erodes the benefit those programmes are designed to deliver.",
+        "Don't over-target by education, employment or income when promoting goal-setting and monitoring \u2014 the data shows these habits help broadly, so narrow eligibility criteria would exclude people who benefit.",
+        "Use the welfare-reliance model (c = 0.829) as the strongest of the four for identifying at-risk individuals proactively."
       ],
-      "roi": "Produced statistically robust findings on hardship drivers to support policy recommendations.",
+      "roi": "Produced a diagnostically validated two-stage model of financial hardship across 14,669 respondents, identifying which financial behaviours protect against hardship, which subgroup differences are real, and \u2014 equally usefully \u2014 which widely assumed subgroup effects are not statistically supported.",
       "media": {
         "dashboardEmbed": null,
-        "documents": [],
-        "codeSnippets": [],
+        "documents": [
+          {
+            "title": "OLS Regression Report (Assessment 1)",
+            "type": "docx",
+            "url": "/case-studies/financial-hardship/Financial-Hardship-OLS-Report.docx"
+          },
+          {
+            "title": "Binary Response Model Report (Assessment 2)",
+            "type": "docx",
+            "url": "/case-studies/financial-hardship/Financial-Hardship-Logistic-Report.docx"
+          }
+        ],
+        "codeSnippets": [
+          {
+            "language": "sas",
+            "title": "Logistic Model with Interaction Term",
+            "code": "/* Model 1: asset liquidation ~ financial monitoring x marital status */\nproc logistic data=hardship;\n  class married employed highestedu / param=ref;\n  model finsoldpawn(event='1') = fcfinwatch married\n                                 fcfinwatch*married\n                                 age incomepos highestedu\n                                 / lackfit rsquare;\n  output out=pred p=predprob;\n  title \"Financial Monitoring x Marital Status - Asset Liquidation\";\nrun;"
+          }
+        ],
+        "video": null,
+        "downloads": [
+          {
+            "label": "SAS Program",
+            "fileUrl": "/case-studies/financial-hardship/Financial-Hardship-SAS-Code.sas",
+            "fileType": "sas"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "inside-out-performance",
+      "title": "Inside-Out Performance: Aligning CRM Wins with Real-World Demand",
+      "tagline": "Enriching a B2B CRM pipeline with Google Trends and scraped GPU benchmarks to test whether top-selling products are actually winning \u2014 or just thriving in a bubble.",
+      "org": "Massey University \u2014 Data Mastery: Scripting, Databases and Data Privacy",
+      "role": "Analyst",
+      "year": "2025",
+      "tags": [
+        "SQL & Python",
+        "Dashboards",
+        "Business Requirements / BRDs"
+      ],
+      "featured": true,
+      "thumbnail": "/case-studies/inside-out-performance/charts/correlation-heatmap.png",
+      "businessProblem": {
+        "context": "Internal CRM dashboards tell you which products close deals. They don't tell you whether anyone outside the company has heard of them. This project started from one question about a B2B computer hardware pipeline: are our top-selling products genuinely aligned with market demand, or succeeding in a closed loop where internal sales effort \u2014 not external demand \u2014 is doing the work?",
+        "goals": [
+          "Establish which CRM products actually perform, measured by conversion rate rather than raw deal count.",
+          "Bring in independent external signals \u2014 public search interest and third-party hardware benchmarks \u2014 to test internal performance against outside reality.",
+          "Build a composite score combining internal and external evidence to segment products into High, Mid and Low performers for strategic decisions."
+        ],
+        "painPoints": [
+          "CRM data is self-referential: a product can look healthy internally while being invisible to the wider market, and nothing in the CRM would reveal that.",
+          "External signals had to be acquired from different sources in different shapes \u2014 Google Trends API pulls and web-scraped benchmark tables \u2014 then aligned to CRM products and time periods before any comparison was possible.",
+          "Deal duration was skewed by a small number of very long negotiations, which distorted downstream analysis until capped."
+        ]
+      },
+      "approach": {
+        "methodology": "Wrangled the CRM sales pipeline (accounts, products, sales teams, opportunities), capping deal durations above the 95th percentile to control skew. Ran exploratory analysis across conversion rates, deal stages, agent performance, account size and seasonality, then tested four internal hypotheses covering agent performance variation, account size versus deal value, agent seniority, and deal duration versus conversion. Enriched the internal picture with three external sources: Google Trends search interest for product and category keywords, GPU performance benchmarks web-scraped from Tom's Hardware, and competitor printer search interest. Tested micro-hypotheses comparing internal and external signals using t-tests, then normalised conversion rates and benchmark scores into a composite performance score to classify products into High, Mid and Low tiers. A bonus section demonstrated out-of-core chunked processing on a multi-year Trends dataset to simulate memory-constrained big-data pipelines.",
+        "tools": [
+          "Python",
+          "Pandas",
+          "Google Trends API",
+          "Web Scraping",
+          "Matplotlib"
+        ],
+        "dataSources": [
+          "CRM Sales Opportunities (Maven Analytics Data Playground)",
+          "Google Trends \u2014 GTXPro and sales-related keywords",
+          "Google Trends \u2014 printer product keywords",
+          "GPU performance hierarchy (web-scraped from Tom's Hardware)",
+          "Multi-year Google Trends dataset (for out-of-core processing demonstration)"
+        ]
+      },
+      "insights": [
+        "The flagship product had effectively zero public search interest while the comparable generic category ('Sales Software') averaged 27.4 \u2014 a statistically significant visibility gap (t = 24.21). Strong internal conversion was masking the fact that nobody was finding the product organically.",
+        "The same pattern held against competitors: Canon printers averaged a Google Trends score of 73.0 versus roughly 1.0 for the company's MG printer line (t = 46.77, p \u2248 0.0000). Weak external visibility directly mirrored the MG line's weak CRM pipeline performance \u2014 two independent sources agreeing.",
+        "Technical superiority did not translate into sales. GTX Plus Pro had the highest benchmark score (~154) but the lowest conversion rate of the three GPU tiers (65%), while the technically weaker GTXPro and GTX Basic both converted at ~73.3% \u2014 a clear capability-versus-market-fit misalignment.",
+        "Deal duration and conversion were non-linear: short deals under 30 days converted best (66.4%), long deals over 90 days converted at 57.4%, but medium 30\u201390 day deals collapsed to 28% \u2014 suggesting two distinct winning patterns (quick wins and strategic wins) with stalled deals in between.",
+        "Conversion correlated more strongly with external market awareness (Canon printer interest, r = 0.43) than with raw technical performance (GPU score, r = 0.08) \u2014 market visibility mattered more than specifications."
+      ],
+      "visualizations": [
+        {
+          "type": "image",
+          "title": "Correlation Heatmap: CRM Conversion vs External Signals",
+          "description": "Conversion correlates most strongly with external market awareness (r = 0.43) and only weakly with GPU benchmark score (r = 0.08).",
+          "image": "/case-studies/inside-out-performance/charts/correlation-heatmap.png"
+        },
+        {
+          "type": "image",
+          "title": "Quarterly Sales Performance",
+          "description": "Deal values rise steadily across quarters with a pronounced Q4 peak, indicating end-of-year procurement cycles.",
+          "image": "/case-studies/inside-out-performance/charts/quarterly-sales-mountain.png"
+        },
+        {
+          "type": "image",
+          "title": "Conversion Rate by Deal Duration",
+          "description": "Short deals convert best (66.4%), long deals still perform (57.4%), but medium-length deals collapse to 28% \u2014 stalled pipeline rather than a smooth gradient.",
+          "image": "/case-studies/inside-out-performance/charts/conversion-by-deal-duration.png"
+        },
+        {
+          "type": "image",
+          "title": "Public Search Interest by Keyword",
+          "description": "Generic category terms dominate public interest while the company's own flagship product barely registers.",
+          "image": "/case-studies/inside-out-performance/charts/google-search-interest.png"
+        },
+        {
+          "type": "image",
+          "title": "GPU Benchmark Performance by Product Tier",
+          "description": "Web-scraped Tom's Hardware benchmarks mapped onto CRM product tiers, providing an external validity check on internal product positioning.",
+          "image": "/case-studies/inside-out-performance/charts/gpu-performance-by-tier.png"
+        },
+        {
+          "type": "image",
+          "title": "Conversion Rate by Product Tier",
+          "description": "The highest-benchmarked tier converts worst \u2014 the core misalignment finding of the project.",
+          "image": "/case-studies/inside-out-performance/charts/conversion-by-product-tier.png"
+        }
+      ],
+      "recommendations": [
+        "Invest in awareness (SEO/SEM, campaign-based marketing) for the flagship product \u2014 it converts well once in the funnel but is essentially undiscoverable, so the constraint is top-of-funnel visibility, not sales capability.",
+        "Reposition or retire the MG printer line. Two independent signals \u2014 internal pipeline performance and external search visibility \u2014 agree, which is a stronger basis for a portfolio decision than either alone.",
+        "Investigate why the highest-performing product converts worst: likely pricing, complexity, or messaging failing to communicate its technical advantage.",
+        "Treat medium-duration deals (30\u201390 days) as a pipeline health flag, not a normal stage \u2014 their 28% conversion suggests stalled rather than progressing opportunities.",
+        "Time campaigns to seasonal peaks identified in both CRM closures and public search interest, rather than running flat-line year-round activity."
+      ],
+      "roi": "Identified a measurable visibility gap on a well-converting flagship product, produced dual-source evidence supporting rationalisation of an underperforming product line, and surfaced a capability-versus-market-fit misalignment on the technically strongest product \u2014 insights none of which were visible from CRM data alone.",
+      "media": {
+        "dashboardEmbed": null,
+        "documents": [
+          {
+            "title": "Full Analysis Report (HTML)",
+            "type": "html",
+            "url": "/case-studies/inside-out-performance/Inside-Out-Performance-Report.html"
+          }
+        ],
+        "codeSnippets": [
+          {
+            "language": "python",
+            "title": "Composite Performance Score & Product Tiering",
+            "code": "# Normalise internal conversion and external benchmark to a common scale\nmerged['conv_norm'] = (\n    (merged['conversion_rate'] - merged['conversion_rate'].min())\n    / (merged['conversion_rate'].max() - merged['conversion_rate'].min())\n)\nmerged['gpu_norm'] = (\n    (merged['gpu_score'] - merged['gpu_score'].min())\n    / (merged['gpu_score'].max() - merged['gpu_score'].min())\n)\n\n# Composite score blends internal performance with external capability\nmerged['composite_score'] = (merged['conv_norm'] + merged['gpu_norm']) / 2\n\n# Segment into actionable tiers\nmerged['tier'] = pd.qcut(\n    merged['composite_score'], q=3,\n    labels=['Low Performer', 'Mid Performer', 'High Performer']\n)"
+          }
+        ],
+        "video": null,
+        "downloads": [
+          {
+            "label": "Jupyter Notebook",
+            "fileUrl": "/case-studies/inside-out-performance/Inside-Out-Performance-Notebook.ipynb",
+            "fileType": "notebook"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "nz-socioeconomic-analysis",
+      "title": "Shared Prosperity & Social Well-being in New Zealand",
+      "tagline": "Recovering a corrupted socio-economic dataset, then testing how unemployment, inequality and housing tenure connect to wellbeing outcomes across NZ.",
+      "org": "Massey University \u2014 Data Mastery: Scripting, Databases and Data Privacy",
+      "role": "Analyst",
+      "year": "2025",
+      "tags": [
+        "SQL & Python",
+        "Dashboards"
+      ],
+      "featured": false,
+      "thumbnail": "/case-studies/nz-socioeconomic/charts/pearson-correlation.png",
+      "businessProblem": {
+        "context": "Socio-economic indicators are usually reported in isolation \u2014 an unemployment figure here, a child poverty statistic there \u2014 which makes it hard to see how they move together. This project cleaned a deliberately corrupted New Zealand socio-economic dataset and combined it with the NZ General Social Survey 2016 to test whether these indicators are genuinely interconnected, and what that implies for policy.",
+        "goals": [
+          "Recover a usable dataset from a corrupted source file with placeholder values, wrong data types and missing columns.",
+          "Test specific relationships: does unemployment relate to suicide rates, has the gender pay gap shifted post-2010, does inequality predict child poverty?",
+          "Bring in independent survey data to test whether housing tenure relates to life satisfaction."
+        ],
+        "painPoints": [
+          "The source file contained '???' placeholder strings, columns misclassified as text despite holding numeric data, entirely empty columns, and duplicate rows \u2014 none of which could be assumed away.",
+          "Several indicators are heavily skewed, so mean imputation would have distorted them.",
+          "With only 37 usable rows after cleaning, the analysis had to be honest about what a dataset that size can and cannot support."
+        ]
+      },
+      "approach": {
+        "methodology": "Cleaned the corrupted dataset systematically: replaced '???' placeholders with proper NaN values, dropped fully-empty columns and duplicate rows, converted misclassified text columns to numeric types, and imputed missing values using the median rather than the mean \u2014 chosen deliberately because the skewed distributions would have pulled a mean-based imputation toward the outliers. Detected outliers using the Interquartile Range method rather than z-scores, since IQR is less influenced by the extreme values present in the data. Ran exploratory analysis and both Pearson and Spearman correlation matrices (Spearman to capture monotonic relationships that Pearson would miss), then hypothesis testing on the specific research questions, and a regression model predicting homeownership. Finally enriched the analysis with NZ General Social Survey 2016 data to compare life satisfaction between owner-occupied and non-owner-occupied households.",
+        "tools": [
+          "Python",
+          "Pandas",
+          "Matplotlib",
+          "Seaborn",
+          "SciPy"
+        ],
+        "dataSources": [
+          "Shared Prosperity dataset (deliberately corrupted source, provided by Massey University)",
+          "NZ General Social Survey 2016 (Stats NZ)"
+        ]
+      },
+      "insights": [
+        "Unemployment and suicide rates showed a clear positive correlation, and unemployment also tracked strongly with homeownership \u2014 supporting the view that economic stability and mental health outcomes are linked rather than independent.",
+        "Income inequality rose markedly over the period covered (correlation with year of 0.88), making it one of the strongest temporal trends in the dataset.",
+        "Child poverty correlated with both homeownership and unemployment, reinforcing housing stability as a plausible lever on poverty outcomes.",
+        "The NZGSS 2016 enrichment showed owner-occupier households reported higher life satisfaction than non-owner-occupiers \u2014 an independent dataset supporting the housing-stability-and-wellbeing link found in the main analysis.",
+        "Median-based imputation and IQR outlier detection materially changed the results versus naive mean imputation, given how skewed several of the indicators were."
+      ],
+      "visualizations": [
+        {
+          "type": "image",
+          "title": "Pearson Correlation Matrix",
+          "description": "Cross-indicator correlations across unemployment, inequality, homeownership, suicide rate, child poverty and the gender pay gap.",
+          "image": "/case-studies/nz-socioeconomic/charts/pearson-correlation.png"
+        },
+        {
+          "type": "image",
+          "title": "Unemployment Rate Over Time",
+          "description": "Unemployment trend across the period covered by the dataset.",
+          "image": "/case-studies/nz-socioeconomic/charts/unemployment-over-time.png"
+        },
+        {
+          "type": "image",
+          "title": "Suicide Rate: High vs Low Unemployment Years",
+          "description": "Comparison of suicide rates between years of high and low unemployment.",
+          "image": "/case-studies/nz-socioeconomic/charts/suicide-vs-unemployment.png"
+        },
+        {
+          "type": "image",
+          "title": "Gender Pay Gap Before vs After 2010",
+          "description": "Testing whether the gender pay gap shifted significantly in the post-2010 period.",
+          "image": "/case-studies/nz-socioeconomic/charts/gender-pay-gap.png"
+        },
+        {
+          "type": "image",
+          "title": "Actual vs Predicted Homeownership Rate",
+          "description": "Regression model predicting homeownership from income inequality and loan delinquency.",
+          "image": "/case-studies/nz-socioeconomic/charts/homeownership-model.png"
+        },
+        {
+          "type": "image",
+          "title": "Life Satisfaction by Housing Tenure (NZGSS 2016)",
+          "description": "Independent survey enrichment: owner-occupier households report higher average life satisfaction than non-owner-occupiers.",
+          "image": "/case-studies/nz-socioeconomic/charts/life-satisfaction-tenure.png"
+        }
+      ],
+      "recommendations": [
+        "Treat housing stability as a cross-cutting policy lever \u2014 it correlates with child poverty, life satisfaction and mental health outcomes simultaneously, so it isn't only a housing issue.",
+        "Pair employment policy with mental health support, given the observed unemployment\u2013suicide relationship.",
+        "Report both Pearson and Spearman correlations when indicators are skewed \u2014 several relationships that look weak linearly are considerably stronger monotonically.",
+        "Be explicit about sample size limits: with 37 usable observations, these findings are directional signals for further investigation, not conclusive causal estimates."
+      ],
+      "roi": "Recovered an unusable corrupted dataset into a clean analytical base, then produced cross-validated evidence \u2014 from two independent data sources \u2014 that housing stability connects to poverty, wellbeing and mental health outcomes across New Zealand.",
+      "media": {
+        "dashboardEmbed": null,
+        "documents": [
+          {
+            "title": "Full Analysis Report (HTML)",
+            "type": "html",
+            "url": "/case-studies/nz-socioeconomic/NZ-Socioeconomic-Report.html"
+          }
+        ],
+        "codeSnippets": [
+          {
+            "language": "python",
+            "title": "Robust Cleaning: Placeholders, Types and Outliers",
+            "code": "# '???' is a placeholder for missing data - treat it as NaN, not a category\ndf.replace('???', np.nan, inplace=True)\n\n# Several numeric columns arrived typed as object\nnumeric_cols = ['income_inequality_ratio', 'unemployment_rate',\n                'loan_delinquency_percent', 'home_ownership_rate']\nfor col in numeric_cols:\n    df[col] = pd.to_numeric(df[col], errors='coerce')\n    # Median, not mean - these distributions are skewed\n    df[col] = df[col].fillna(df[col].median())\n\n# IQR outlier detection - less sensitive to extremes than z-score\ndef flag_outliers_iqr(series):\n    q1, q3 = series.quantile(0.25), series.quantile(0.75)\n    iqr = q3 - q1\n    return (series < q1 - 1.5 * iqr) | (series > q3 + 1.5 * iqr)"
+          }
+        ],
+        "video": null,
+        "downloads": [
+          {
+            "label": "Jupyter Notebook",
+            "fileUrl": "/case-studies/nz-socioeconomic/NZ-Socioeconomic-Notebook.ipynb",
+            "fileType": "notebook"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "crm-sales-database",
+      "title": "CRM Sales Database Design & Analysis (SQLite)",
+      "tagline": "Designing a 3NF relational schema for a B2B sales pipeline, then querying it to link deal outcomes with external market signals.",
+      "org": "Massey University \u2014 Data Mastery: Scripting, Databases and Data Privacy",
+      "role": "Analyst",
+      "year": "2025",
+      "tags": [
+        "SQL & Python",
+        "Business Requirements / BRDs"
+      ],
+      "featured": false,
+      "thumbnail": "/case-studies/crm-database/charts/conversion-by-category.png",
+      "businessProblem": {
+        "context": "CRM exports typically arrive as a set of disconnected flat files \u2014 accounts in one, agents in another, opportunities in a third \u2014 with duplicated fields and no enforced relationships. Analysing them repeatedly means repeatedly re-joining and re-cleaning. This project built a properly normalised relational database as the analytical foundation instead.",
+        "goals": [
+          "Design a relational schema in Third Normal Form to eliminate redundancy and enforce data integrity across the sales pipeline.",
+          "Load, clean and insert CRM and external trend data into that schema with working key constraints.",
+          "Build analytical views and queries that answer real sales questions without re-deriving joins each time."
+        ],
+        "painPoints": [
+          "Source CRM files used inconsistent column naming across exports and had no primary keys, so relationships had to be established rather than merely mapped.",
+          "External Google Trends data has no natural key linking it to CRM records \u2014 it aligns only by date and keyword, requiring a deliberate design decision about how to bridge internal and external data."
+        ]
+      },
+      "approach": {
+        "methodology": "Designed a six-table relational schema following Third Normal Form principles \u2014 accounts, sales_agents, products, opportunities, google_trends, and a consolidated merged_insights table \u2014 with primary and foreign key constraints enforcing referential integrity across product, account and agent relationships. Built the database in SQLite, standardising column names on load, generating surrogate keys where source data lacked them, and writing the creation scripts to be idempotent so the notebook could be re-run cleanly. Layered three analytical views on top of the base tables to support recurring queries on sales performance, product effectiveness and temporal trends without repeating join logic.",
+        "tools": [
+          "SQLite",
+          "SQL",
+          "Python",
+          "Pandas"
+        ],
+        "dataSources": [
+          "CRM Sales Opportunities (accounts, agents, products, opportunities)",
+          "Google Trends keyword time series",
+          "Consolidated merged insights table"
+        ]
+      },
+      "insights": [
+        "Normalising to 3NF removed the repeated account and agent attributes that were duplicated across every opportunity row in the flat exports, reducing redundancy and making updates safe.",
+        "Foreign key constraints surfaced referential problems in the source data that flat-file analysis would have silently absorbed into incorrect join results.",
+        "Separating Google Trends into a standalone table \u2014 deliberately not force-joined to opportunities \u2014 kept the schema honest: external signals align by date and keyword, not by a genuine relational key.",
+        "Analytical views made recurring questions (conversion by product category, agent performance, trend alignment) a single query rather than a repeated multi-table join."
+      ],
+      "visualizations": [
+        {
+          "type": "image",
+          "title": "Conversion Rate by Product Category",
+          "description": "Queried directly from the normalised database \u2014 GPU products convert at a substantially higher rate than printer products.",
+          "image": "/case-studies/crm-database/charts/conversion-by-category.png"
+        }
+      ],
+      "recommendations": [
+        "Keep external signal data in its own table with explicit alignment logic rather than denormalising it into transactional records \u2014 it prevents implying a relationship that doesn't exist.",
+        "Use analytical views as the interface for recurring business questions, so query logic lives in one place rather than being re-written per analysis.",
+        "Write schema creation as idempotent scripts so the analytical pipeline is reproducible end-to-end."
+      ],
+      "roi": "Converted a set of disconnected CRM exports into a normalised, integrity-enforced relational database with reusable analytical views \u2014 turning repeated ad-hoc data wrangling into a queryable foundation.",
+      "media": {
+        "dashboardEmbed": null,
+        "documents": [
+          {
+            "title": "Full Notebook Report (HTML)",
+            "type": "html",
+            "url": "/case-studies/crm-database/CRM-Database-Report.html"
+          }
+        ],
+        "codeSnippets": [
+          {
+            "language": "sql",
+            "title": "Schema Design with Referential Integrity",
+            "code": "CREATE TABLE opportunities (\n    opportunity_id   INTEGER PRIMARY KEY,\n    account_id       INTEGER,\n    agent_id         INTEGER,\n    product_id       INTEGER,\n    deal_stage       TEXT,\n    engage_date      DATE,\n    close_date       DATE,\n    close_value      REAL,\n    FOREIGN KEY (account_id) REFERENCES accounts(account_id),\n    FOREIGN KEY (agent_id)   REFERENCES sales_agents(agent_id),\n    FOREIGN KEY (product_id) REFERENCES products(product_id)\n);\n\n-- Analytical view: conversion rate by product category\nCREATE VIEW v_conversion_by_category AS\nSELECT p.category,\n       COUNT(*)                                        AS total_deals,\n       SUM(CASE WHEN o.deal_stage = 'Won' THEN 1 ELSE 0 END) AS won_deals,\n       ROUND(100.0 * SUM(CASE WHEN o.deal_stage = 'Won' THEN 1 ELSE 0 END)\n             / COUNT(*), 2)                            AS conversion_rate\nFROM opportunities o\nJOIN products p ON o.product_id = p.product_id\nGROUP BY p.category;"
+          }
+        ],
+        "video": null,
+        "downloads": [
+          {
+            "label": "Jupyter Notebook",
+            "fileUrl": "/case-studies/crm-database/CRM-Database-Notebook.ipynb",
+            "fileType": "notebook"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "practical-data-mining",
+      "title": "Practical Data Mining: Prediction, Classification & Association Rules",
+      "tagline": "Four applied modelling problems in R \u2014 regression trees, source attribution, survey clustering, and market-basket rule mining.",
+      "org": "Massey University \u2014 Practical Data Mining (161.777)",
+      "role": "Analyst",
+      "year": "2025",
+      "tags": [
+        "SQL & Python",
+        "Financial Models"
+      ],
+      "featured": false,
+      "thumbnail": "/case-studies/data-mining/charts/wvs-clustering.png",
+      "businessProblem": {
+        "context": "Different analytical problems demand fundamentally different techniques, and choosing wrongly costs accuracy. This project worked through four distinct problem types \u2014 continuous prediction, multi-class attribution, unsupervised segmentation, and association discovery \u2014 comparing competing methods on each rather than defaulting to one familiar approach.",
+        "goals": [
+          "Compare linear and tree-based models for predicting a continuous outcome, and quantify the difference.",
+          "Attribute observations to their likely source using classification, and evaluate with balanced accuracy rather than raw accuracy alone.",
+          "Segment survey respondents without predefined labels, and mine association rules from transactional data using support, confidence and lift."
+        ],
+        "painPoints": [
+          "Raw accuracy is misleading on imbalanced multi-class problems, so balanced accuracy was needed to evaluate honestly.",
+          "Association rule mining generates large numbers of trivially true rules; thresholds on support, confidence and lift were required to isolate genuinely informative ones.",
+          "Comparing models fairly requires consistent evaluation metrics across methods, not whichever metric flatters each one."
+        ]
+      },
+      "approach": {
+        "methodology": "Exercise 1: fitted both a linear regression and a regression tree (rpart) to predict ice thickness from spatial and temporal predictors, comparing them on RMSE. Exercise 2: built classification models to attribute campylobacter cases to their likely source, evaluating on both overall and balanced accuracy across classes. Exercise 3: applied clustering to New Zealand World Values Survey data to identify respondent segments without predefined labels. Exercise 4: used the Apriori algorithm on flag transaction data with a minimum support threshold of 0.023 (equivalent to 5 of 211 countries) and a confidence threshold, then filtered to rules with lift greater than 2 to isolate genuinely non-obvious associations from statistically trivial ones.",
+        "tools": [
+          "R",
+          "tidyverse",
+          "rpart",
+          "arules",
+          "ggplot2"
+        ],
+        "dataSources": [
+          "Ice thickness training and test data (10,000 training observations)",
+          "Campylobacter source attribution data",
+          "NZ World Values Survey 2014",
+          "Flag attribute transaction data (211 countries)"
+        ]
+      },
+      "insights": [
+        "The regression tree substantially outperformed linear regression for ice thickness prediction (RMSE 0.5879 vs 0.8523) \u2014 the relationship was non-linear enough that a linear model left significant structure unexplained.",
+        "Model choice on the classification task made a decisive difference: the stronger model reached 95.5% accuracy versus 72% for the weaker one, with balanced accuracy confirming the improvement held across classes rather than coming from the majority class alone.",
+        "Clustering the World Values Survey produced four interpretable respondent segments differentiated primarily by age, education level, life satisfaction and self-reported health \u2014 with the first two dimensions capturing 49.8% of total variance.",
+        "Association rule mining surfaced clear colour co-occurrence patterns in national flags, with {Black} \u2192 {Red} showing the highest support (0.1745) among the rules examined.",
+        "Filtering to lift > 2 was essential \u2014 it separated genuinely informative associations from rules that were merely frequent because their component items were individually common."
+      ],
+      "visualizations": [
+        {
+          "type": "image",
+          "title": "World Values Survey: 4-Cluster Segmentation",
+          "description": "Respondent segments identified via hierarchical clustering with complete linkage, projected onto the first two dimensions (49.8% of variance combined).",
+          "image": "/case-studies/data-mining/charts/wvs-clustering.png"
+        },
+        {
+          "type": "image",
+          "title": "Cluster Profiles Across Survey Variables",
+          "description": "Normalised variable distributions by k-means cluster (k=4), showing how the segments differ on age, education, life satisfaction, marital status and health.",
+          "image": "/case-studies/data-mining/charts/cluster-profile.png"
+        }
+      ],
+      "recommendations": [
+        "Test tree-based models alongside linear ones as standard practice \u2014 the RMSE gap here was substantial and would have been invisible had only linear regression been fitted.",
+        "Report balanced accuracy on any multi-class problem with uneven class sizes; raw accuracy can look strong purely from majority-class performance.",
+        "Always filter association rules on lift, not just support and confidence \u2014 high-support rules are frequently trivial."
+      ],
+      "roi": "Demonstrated method selection across four distinct problem types, with measurable comparisons at each step \u2014 including a 31% RMSE reduction from choosing a tree model over linear regression, and a 23-point accuracy gain from model selection on the classification task.",
+      "media": {
+        "dashboardEmbed": null,
+        "documents": [
+          {
+            "title": "Full Project Report (HTML)",
+            "type": "html",
+            "url": "/case-studies/data-mining/Data-Mining-Report.html"
+          }
+        ],
+        "codeSnippets": [
+          {
+            "language": "r",
+            "title": "Model Comparison & Association Rule Mining",
+            "code": "# Compare linear regression against a regression tree\nlm.model   <- lm(Thickness ~ ., data = ice.train)\ntree.model <- rpart(Thickness ~ ., data = ice.train)\n\nlm.train.rmse   <- rmse(ice.train$Thickness, predict(lm.model,   ice.train))\ntree.train.rmse <- rmse(ice.train$Thickness, predict(tree.model, ice.train))\n# lm: 0.8523   tree: 0.5879\n\n# Association rules: support >= 5/211 countries\nflag_rules <- apriori(flags,\n                      parameter = list(support = 0.023,\n                                       confidence = 0.5))\n\n# Filter to genuinely informative rules\nhigh_lift_rules <- subset(flag_rules, subset = lift > 2)\ninspect(sort(high_lift_rules, by = \"support\", decreasing = TRUE)[1:5])"
+          }
+        ],
         "video": null,
         "downloads": []
       }
@@ -240,7 +751,7 @@
         "Business Requirements / BRDs"
       ],
       "featured": true,
-      "thumbnail": "/projects/pmo-thumb.svg",
+      "thumbnail": "/projects/pmo-thumb.png",
       "businessProblem": {
         "context": "KPI, SLA, billing, and utilisation data for 7 Omnicom networks and 80+ global agencies was spread across separate systems (Replicon, Hive, Jira, Adobe Workfront), making reporting to senior leadership and clients a heavily manual process.",
         "goals": [
@@ -302,7 +813,7 @@
         "Dashboards"
       ],
       "featured": false,
-      "thumbnail": "/projects/kulturehire-thumb.svg",
+      "thumbnail": "/projects/kulturehire-thumb.png",
       "businessProblem": {
         "context": "Marketing and business development teams needed a clearer read on hiring trends and candidate engagement patterns than raw survey exports could provide.",
         "goals": [
