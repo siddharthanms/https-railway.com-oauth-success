@@ -16,7 +16,15 @@
         "Monitored and resolved quality breaches and delivery delays by coordinating across Resource Management, Project Controllers, and Client Success teams.",
         "Promoted within the Governance team after one year, taking on Creative Services coordination with additional support to Market Research."
       ],
-      "tools": ["Power BI", "Excel (Advanced)", "SQL", "Jira", "Adobe Workfront", "Replicon", "Hive"]
+      "tools": [
+        "Power BI",
+        "Excel (Advanced)",
+        "SQL",
+        "Jira",
+        "Adobe Workfront",
+        "Replicon",
+        "Hive"
+      ]
     },
     {
       "id": "kulturehire",
@@ -31,7 +39,10 @@
         "Developed interactive dashboards to visualise recruitment metrics, enabling data-driven decisions for marketing and business development teams.",
         "Presented findings to stakeholders during live LinkedIn virtual sessions, communicating insights clearly to professional audiences in real time."
       ],
-      "tools": ["SQL", "Excel"]
+      "tools": [
+        "SQL",
+        "Excel"
+      ]
     },
     {
       "id": "vendra",
@@ -45,7 +56,9 @@
         "Conducted market and competitor research to support strategic sales planning and identify growth opportunities.",
         "Built an Excel-based pipeline tracker to monitor leads, proposals, and deal status, improving sales team visibility and reporting."
       ],
-      "tools": ["Excel"]
+      "tools": [
+        "Excel"
+      ]
     }
   ],
   "education": [
@@ -54,8 +67,8 @@
       "org": "Massey University",
       "role": "Master of Analytics (Business)",
       "location": "Auckland, New Zealand",
-      "start": "2024",
-      "end": "2025",
+      "start": "2025",
+      "end": "2026",
       "summary": "Key papers: Data Mastery (Scripting, Databases & Data Privacy), Multivariate Analysis for Big Data, Practical Data Mining, Applied Econometric Methods, Customer Insights, Return on Marketing Investment."
     },
     {
@@ -63,20 +76,61 @@
       "org": "Anna University",
       "role": "Bachelor of Engineering (Mechanical)",
       "location": "Chennai, India",
-      "start": "2016",
-      "end": "2020",
+      "start": "2018",
+      "end": "2022",
       "summary": "Electives: Principles of Management, Statistics & Numerical Methods, Cost Estimation, Process Planning."
     }
   ],
   "certifications": [
-    { "id": "sas-cert", "title": "SAS Academic Specialisation in Business Analytics", "org": "Massey University & SAS", "year": "2026" },
-    { "id": "google-cert", "title": "Google Data Analytics Professional Certificate", "org": "Google", "year": "" },
-    { "id": "ms-pm", "title": "Microsoft Career Essentials in Project Management", "org": "Microsoft", "year": "" },
-    { "id": "ms-ba", "title": "Microsoft Career Essentials in Business Analysis", "org": "Microsoft", "year": "" }
+    {
+      "id": "sas-cert",
+      "title": "SAS Academic Specialisation in Business Analytics",
+      "org": "Massey University & SAS",
+      "year": "2026"
+    },
+    {
+      "id": "privacy101",
+      "title": "Privacy101 \u2014 Office of the Privacy Commissioner",
+      "org": "Office of the Privacy Commissioner (Te Mana M\u0101t\u0101pono Matatapu)",
+      "year": "2025"
+    },
+    {
+      "id": "google-cert",
+      "title": "Google Data Analytics Professional Certificate",
+      "org": "Google",
+      "year": ""
+    },
+    {
+      "id": "ms-pm",
+      "title": "Microsoft Career Essentials in Project Management",
+      "org": "Microsoft",
+      "year": ""
+    },
+    {
+      "id": "ms-ba",
+      "title": "Microsoft Career Essentials in Business Analysis",
+      "org": "Microsoft",
+      "year": ""
+    }
   ],
   "awards": [
-    { "id": "rookie", "title": "Rookie of the Year", "org": "Omnicom Global Solutions | Annalect", "year": "2024" },
-    { "id": "on-the-spot", "title": "On-the-Spot Award", "org": "Omnicom Global Solutions | Annalect", "year": "2024" },
-    { "id": "academic-excellence", "title": "Academic Excellence", "org": "Massey University", "year": "2025" }
+    {
+      "id": "rookie",
+      "title": "Rookie of the Year",
+      "org": "Omnicom Global Solutions | Annalect",
+      "year": "2024"
+    },
+    {
+      "id": "on-the-spot",
+      "title": "On-the-Spot Award",
+      "org": "Omnicom Global Solutions | Annalect",
+      "year": "2024"
+    },
+    {
+      "id": "academic-excellence",
+      "title": "Academic Excellence",
+      "org": "Massey University",
+      "year": "2025"
+    }
   ]
 }
