@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import profile from "@/data/profile.json";
 
-const WEB3FORMS_KEY = "4e8262ec-655c-4d4a-9fc9-87173de135d1";
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/xeajgbeq";
 
 type Status = "idle" | "sending" | "success" | "error";
 
@@ -19,20 +19,18 @@ export function ContactSection() {
     const formEl = e.currentTarget;
     const data = new FormData(formEl);
 
-    data.append("access_key", WEB3FORMS_KEY);
-    data.append("subject", `Portfolio enquiry from ${data.get("name")}`);
-    data.append("from_name", "Portfolio Website");
+    data.append("_subject", `Portfolio enquiry from ${data.get("name")}`);
 
     setStatus("sending");
 
     try {
-      const res = await fetch("https://api.web3forms.com/submit", {
+      const res = await fetch(FORMSPREE_ENDPOINT, {
         method: "POST",
         body: data,
+        headers: { Accept: "application/json" },
       });
-      const json = await res.json();
 
-      if (res.ok && json.success) {
+      if (res.ok) {
         setStatus("success");
         formEl.reset();
       } else {
@@ -104,7 +102,7 @@ export function ContactSection() {
                   {/* Honeypot - hidden from humans, catches bots */}
                   <input
                     type="checkbox"
-                    name="botcheck"
+                    name="_gotcha"
                     className="hidden"
                     style={{ display: "none" }}
                     tabIndex={-1}
