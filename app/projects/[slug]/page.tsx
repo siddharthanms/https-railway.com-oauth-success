@@ -49,10 +49,10 @@ export default function ProjectPage({ params }: Props) {
           <ArrowLeft className="h-4 w-4" /> Back to case studies
         </Link>
 
-        <p className="text-sm font-medium uppercase tracking-widest text-primary">
+        <p className="text-xs font-medium uppercase tracking-[0.18em] text-primary">
           {project.org} · {project.year}
         </p>
-        <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">{project.title}</h1>
+        <h1 className="mt-3 font-serif text-3xl font-normal leading-[1.2] tracking-tight sm:text-[2.5rem]">{project.title}</h1>
         <p className="mt-3 text-lg text-muted-foreground">{project.tagline}</p>
 
         <div className="mt-4 flex flex-wrap gap-1.5">
@@ -149,7 +149,7 @@ export default function ProjectPage({ params }: Props) {
 
           {hasMedia && (
             <section className="space-y-6">
-              <h2 className="text-xl font-semibold tracking-tight">Project Artifacts</h2>
+              <h2 className="font-serif text-xl font-normal tracking-tight">Project Artifacts</h2>
               <DashboardEmbed dashboard={media.dashboardEmbed} />
               <div className="grid gap-6 lg:grid-cols-2">
                 <DocumentViewer documents={media.documents} />
@@ -175,7 +175,7 @@ function SectionHeading({
   return (
     <div className="mb-4 flex items-center gap-2">
       <Icon className="h-5 w-5 text-primary" />
-      <h2 className="text-xl font-semibold tracking-tight">{title}</h2>
+      <h2 className="font-serif text-xl font-normal tracking-tight">{title}</h2>
     </div>
   );
 }
