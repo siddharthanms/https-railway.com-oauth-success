@@ -52,9 +52,10 @@ const config: Config = {
       },
       fontFamily: {
         sans: [
-          "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Inter",
+          "-apple-system", "BlinkMacSystemFont", "Segoe UI",
           "Helvetica Neue", "Arial", "sans-serif",
         ],
+        serif: ["Iowan Old Style", "Palatino Linotype", "Palatino", "Georgia", "serif"],
         mono: ["ui-monospace", "SFMono-Regular", "Menlo", "Consolas", "monospace"],
       },
       keyframes: {
