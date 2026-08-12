@@ -4,44 +4,44 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222 47% 11%;
+    --background: 60 20% 98%;
+    --foreground: 60 3% 8%;
     --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
-    --primary: 221 83% 53%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 222 47% 11%;
-    --muted: 210 40% 96%;
-    --muted-foreground: 215 16% 47%;
-    --accent: 210 40% 94%;
-    --accent-foreground: 222 47% 11%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 221 83% 53%;
-    --radius: 0.75rem;
+    --card-foreground: 60 3% 8%;
+    --primary: 82 23% 30%;
+    --primary-foreground: 60 20% 98%;
+    --secondary: 75 18% 93%;
+    --secondary-foreground: 82 25% 23%;
+    --muted: 60 12% 95%;
+    --muted-foreground: 60 4% 40%;
+    --accent: 75 20% 91%;
+    --accent-foreground: 82 25% 23%;
+    --destructive: 0 65% 45%;
+    --destructive-foreground: 60 20% 98%;
+    --border: 55 12% 88%;
+    --input: 55 12% 88%;
+    --ring: 82 23% 30%;
+    --radius: 0.375rem;
   }
 
   .dark {
-    --background: 222 47% 6%;
-    --foreground: 210 40% 98%;
-    --card: 222 40% 9%;
-    --card-foreground: 210 40% 98%;
-    --primary: 217 91% 60%;
-    --primary-foreground: 222 47% 6%;
-    --secondary: 222 30% 14%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 222 30% 14%;
-    --muted-foreground: 215 20% 65%;
-    --accent: 222 30% 16%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 63% 31%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 222 25% 18%;
-    --input: 222 25% 18%;
-    --ring: 217 91% 60%;
+    --background: 60 3% 7%;
+    --foreground: 60 15% 95%;
+    --card: 60 4% 10%;
+    --card-foreground: 60 15% 95%;
+    --primary: 79 20% 52%;
+    --primary-foreground: 60 3% 8%;
+    --secondary: 75 8% 16%;
+    --secondary-foreground: 79 25% 80%;
+    --muted: 60 4% 15%;
+    --muted-foreground: 55 6% 62%;
+    --accent: 79 14% 18%;
+    --accent-foreground: 79 25% 80%;
+    --destructive: 0 50% 40%;
+    --destructive-foreground: 60 15% 95%;
+    --border: 60 5% 18%;
+    --input: 60 5% 18%;
+    --ring: 79 20% 52%;
   }
 }
 
@@ -52,5 +52,10 @@
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3 {
+    font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    letter-spacing: -0.011em;
   }
 }
