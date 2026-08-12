@@ -2,21 +2,45 @@
 
 import * as React from "react";
 import { motion } from "framer-motion";
-import { Mail, Phone, Send } from "lucide-react";
+import { Mail, Phone, Send, CheckCircle2, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import profile from "@/data/profile.json";
 
-export function ContactSection() {
-  const [submitted, setSubmitted] = React.useState(false);
+const WEB3FORMS_KEY = "4e8262ec-655c-4d4a-9fc9-87173de135d1";
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+type Status = "idle" | "sending" | "success" | "error";
+
+export function ContactSection() {
+  const [status, setStatus] = React.useState<Status>("idle");
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const form = new FormData(e.currentTarget);
-    const subject = encodeURIComponent(`Portfolio enquiry from ${form.get("name")}`);
-    const body = encodeURIComponent(String(form.get("message") ?? ""));
-    window.location.href = `mailto:${profile.email}?subject=${subject}&body=${body}`;
-    setSubmitted(true);
+    const formEl = e.currentTarget;
+    const data = new FormData(formEl);
+
+    data.append("access_key", WEB3FORMS_KEY);
+    data.append("subject", `Portfolio enquiry from ${data.get("name")}`);
+    data.append("from_name", "Portfolio Website");
+
+    setStatus("sending");
+
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: data,
+      });
+      const json = await res.json();
+
+      if (res.ok && json.success) {
+        setStatus("success");
+        formEl.reset();
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
   }
 
   return (
@@ -60,12 +84,33 @@ export function ContactSection() {
         >
           <Card>
             <CardContent className="p-6">
-              {submitted ? (
-                <p className="py-8 text-center text-sm text-muted-foreground">
-                  Your email client should be open — thanks for reaching out!
-                </p>
+              {status === "success" ? (
+                <div className="flex flex-col items-center gap-3 py-10 text-center">
+                  <CheckCircle2 className="h-10 w-10 text-primary" />
+                  <p className="text-sm font-medium">Message sent — thanks for reaching out.</p>
+                  <p className="text-sm text-muted-foreground">
+                    I&rsquo;ll get back to you as soon as I can.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setStatus("idle")}
+                    className="mt-2 text-sm text-primary underline underline-offset-4"
+                  >
+                    Send another message
+                  </button>
+                </div>
               ) : (
                 <form className="space-y-4" onSubmit={handleSubmit}>
+                  {/* Honeypot - hidden from humans, catches bots */}
+                  <input
+                    type="checkbox"
+                    name="botcheck"
+                    className="hidden"
+                    style={{ display: "none" }}
+                    tabIndex={-1}
+                    autoComplete="off"
+                  />
+
                   <div>
                     <label htmlFor="name" className="mb-1.5 block text-sm font-medium">
                       Name
@@ -101,8 +146,26 @@ export function ContactSection() {
                       className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm outline-none ring-primary focus:ring-2"
                     />
                   </div>
-                  <Button type="submit" className="gap-2">
-                    <Send className="h-4 w-4" /> Send Message
+
+                  {status === "error" && (
+                    <div className="flex items-start gap-2 rounded-md border border-destructive/40 bg-destructive/10 p-3 text-sm">
+                      <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-destructive" />
+                      <span>
+                        Something went wrong sending that. Please email me directly at{" "}
+                        <a
+                          href={`mailto:${profile.email}`}
+                          className="font-medium underline underline-offset-4"
+                        >
+                          {profile.email}
+                        </a>
+                        .
+                      </span>
+                    </div>
+                  )}
+
+                  <Button type="submit" className="gap-2" disabled={status === "sending"}>
+                    <Send className="h-4 w-4" />
+                    {status === "sending" ? "Sending…" : "Send Message"}
                   </Button>
                 </form>
               )}
