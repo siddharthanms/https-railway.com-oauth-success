@@ -72,12 +72,12 @@ export function Hero() {
           transition={{ duration: 0.6, delay: 0.15 }}
           className="mx-auto"
         >
-          <div className="relative h-56 w-56 overflow-hidden rounded-lg ring-1 ring-border sm:h-72 sm:w-72">
+          <div className="relative aspect-[3/4] w-56 overflow-hidden rounded-lg ring-1 ring-border sm:w-64">
             <Image
               src={profile.avatar}
               alt={profile.name}
               fill
-              sizes="288px"
+              sizes="(max-width: 640px) 224px, 256px"
               className="object-cover"
               priority
             />
