@@ -15,16 +15,17 @@ const iconMap: Record<string, ComponentType<{ className?: string }>> = {
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden border-b border-border py-24 sm:py-32">
+    <section className="relative overflow-hidden border-b border-border py-16 sm:py-20">
       <div className="container grid items-center gap-12 md:grid-cols-[1.2fr_0.8fr]">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <p className="mb-5 text-xs font-medium uppercase tracking-[0.18em] text-primary">
+          <p className="mb-2 text-xs font-medium uppercase tracking-[0.18em] text-primary">
             {profile.location}
           </p>
+          <p className="mb-5 text-[13px] text-muted-foreground">{profile.workRights}</p>
           <h1 className="font-serif text-4xl font-normal leading-[1.15] tracking-tight sm:text-5xl lg:text-[3.4rem]">
             {profile.headline}
           </h1>
