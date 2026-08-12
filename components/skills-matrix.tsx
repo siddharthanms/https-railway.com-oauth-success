@@ -9,7 +9,7 @@ export function SkillsMatrix() {
   return (
     <section id="skills" className="border-y border-border/60 bg-muted/30 py-20">
       <div className="container">
-        <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Skills & Tools</h2>
+        <h2 className="font-serif text-3xl font-normal tracking-tight sm:text-[2.5rem]">Skills & Tools</h2>
         <p className="mt-3 max-w-2xl text-muted-foreground">
           A working toolkit spanning hands-on technical analysis and business-facing analysis.
         </p>

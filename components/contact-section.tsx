@@ -50,7 +50,7 @@ export function ContactSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.4 }}
         >
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Let&rsquo;s talk data</h2>
+          <h2 className="font-serif text-3xl font-normal tracking-tight sm:text-[2.5rem]">Let&rsquo;s talk data</h2>
           <p className="mt-3 max-w-md text-muted-foreground">
             Open to Data Analyst, Business Analyst and related roles across New Zealand. Reach out
             directly by email or phone.

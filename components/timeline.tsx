@@ -87,7 +87,7 @@ export function Timeline() {
   return (
     <section id="experience" className="py-20">
       <div className="container">
-        <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Experience & Education</h2>
+        <h2 className="font-serif text-3xl font-normal tracking-tight sm:text-[2.5rem]">Experience & Education</h2>
         <p className="mt-3 max-w-2xl text-muted-foreground">
           Career history, postgraduate study, and certifications.
         </p>

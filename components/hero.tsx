@@ -15,21 +15,20 @@ const iconMap: Record<string, ComponentType<{ className?: string }>> = {
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden py-20 sm:py-28">
-      <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_hsl(var(--primary)/0.12),_transparent_60%)]" />
+    <section className="relative overflow-hidden border-b border-border py-24 sm:py-32">
       <div className="container grid items-center gap-12 md:grid-cols-[1.2fr_0.8fr]">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <p className="mb-4 text-sm font-medium uppercase tracking-widest text-primary">
+          <p className="mb-5 text-xs font-medium uppercase tracking-[0.18em] text-primary">
             {profile.location}
           </p>
-          <h1 className="text-4xl font-bold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
+          <h1 className="font-serif text-4xl font-normal leading-[1.15] tracking-tight sm:text-5xl lg:text-[3.4rem]">
             {profile.headline}
           </h1>
-          <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+          <p className="mt-7 max-w-xl text-[15px] leading-[1.75] text-muted-foreground sm:text-base">
             {profile.summary}
           </p>
 
@@ -58,7 +57,7 @@ export function Hero() {
                   key={social.label}
                   href={social.url}
                   aria-label={social.label}
-                  className="rounded-full border border-border p-2.5 text-muted-foreground transition-colors hover:border-primary hover:text-primary"
+                  className="rounded-md border border-border p-2.5 text-muted-foreground transition-colors hover:border-primary hover:text-primary"
                 >
                   <Icon className="h-4 w-4" />
                 </a>
@@ -73,7 +72,7 @@ export function Hero() {
           transition={{ duration: 0.6, delay: 0.15 }}
           className="mx-auto"
         >
-          <div className="relative h-56 w-56 overflow-hidden rounded-3xl border-4 border-background shadow-xl ring-1 ring-border sm:h-72 sm:w-72">
+          <div className="relative h-56 w-56 overflow-hidden rounded-lg ring-1 ring-border sm:h-72 sm:w-72">
             <Image
               src={profile.avatar}
               alt={profile.name}

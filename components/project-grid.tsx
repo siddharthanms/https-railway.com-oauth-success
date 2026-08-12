@@ -20,7 +20,7 @@ export function ProjectGrid() {
   return (
     <section id="projects" className="py-20">
       <div className="container">
-        <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Case Studies</h2>
+        <h2 className="font-serif text-3xl font-normal tracking-tight sm:text-[2.5rem]">Case Studies</h2>
         <p className="mt-3 max-w-2xl text-muted-foreground">
           Deep-dive data & business analysis projects, filterable by focus area.
         </p>
